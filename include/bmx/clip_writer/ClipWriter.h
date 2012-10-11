@@ -42,7 +42,7 @@
 
 #include <bmx/clip_writer/ClipWriterTrack.h>
 
-
+using namespace mxfpp;
 
 namespace bmx
 {
@@ -84,6 +84,11 @@ public:
     void PrepareWrite();
     void WriteSamples(uint32_t track_index, const unsigned char *data, uint32_t size, uint32_t num_samples);
     void CompleteWrite();
+
+public:
+    mxfpp::HeaderMetadata* GetHeaderMetadata() const;
+    mxfpp::DataModel* GetDataModel() const;
+	void PrepareHeaderMetadata();
 
 public:
     Rational GetFrameRate() const;

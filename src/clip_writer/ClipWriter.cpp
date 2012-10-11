@@ -389,6 +389,65 @@ void ClipWriter::CompleteWrite()
     }
 }
 
+HeaderMetadata* ClipWriter::GetHeaderMetadata() const {
+	switch (mType)
+    {
+        case CW_AS11_OP1A_CLIP_TYPE:
+        case CW_AS11_D10_CLIP_TYPE:
+			return mAS11Clip->GetHeaderMetadata();
+        case CW_OP1A_CLIP_TYPE:
+			return mOP1AClip->GetHeaderMetadata();
+        case CW_AVID_CLIP_TYPE:
+			return mAvidClip->GetHeaderMetadata();
+        case CW_D10_CLIP_TYPE:
+			return mD10Clip->GetHeaderMetadata();
+		//case CW_AS02_CLIP_TYPE:
+        //case CW_WAVE_CLIP_TYPE:
+        //case CW_UNKNOWN_CLIP_TYPE:
+	}
+	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
+}
+
+DataModel* ClipWriter::GetDataModel() const {
+	switch (mType)
+    {
+        case CW_AS11_OP1A_CLIP_TYPE:
+        case CW_AS11_D10_CLIP_TYPE:
+			return mAS11Clip->GetDataModel();
+        case CW_OP1A_CLIP_TYPE:
+			return mOP1AClip->GetDataModel();
+        case CW_AVID_CLIP_TYPE:
+			return mAvidClip->GetDataModel();
+        case CW_D10_CLIP_TYPE:
+			return mD10Clip->GetDataModel();
+		//case CW_AS02_CLIP_TYPE:
+        //case CW_WAVE_CLIP_TYPE:
+        //case CW_UNKNOWN_CLIP_TYPE:
+	}
+	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
+}
+
+void ClipWriter::PrepareHeaderMetadata() {
+	switch (mType)
+    {
+        case CW_AS11_OP1A_CLIP_TYPE:
+        case CW_AS11_D10_CLIP_TYPE:
+			mAS11Clip->PrepareHeaderMetadata();
+			return;
+        case CW_OP1A_CLIP_TYPE:
+			mOP1AClip->PrepareHeaderMetadata();
+			return;
+        case CW_D10_CLIP_TYPE:
+			return mD10Clip->PrepareHeaderMetadata();
+			break;
+        //case CW_AVID_CLIP_TYPE:
+		//case CW_AS02_CLIP_TYPE:
+        //case CW_WAVE_CLIP_TYPE:
+        //case CW_UNKNOWN_CLIP_TYPE:
+	}
+	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
+}
+
 Rational ClipWriter::GetFrameRate() const
 {
     switch (mType)
